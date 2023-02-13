@@ -1,10 +1,8 @@
-import { ReactElement } from 'react';
 import { Product } from './product';
-
-export interface ProductCardProps {
-  product: Product;
-  children?: ReactElement | ReactElement[];
-}
+import { ProductCardProps } from '../components/ProductCard';
+import { ProductButtonsProps } from '../components/ProductButtons';
+import { ProductImageProps } from '../components/ProductImage';
+import { ProductTitleProps } from '../components/ProductTitle';
 
 export interface ProductContextProps {
   counter: number;
@@ -14,7 +12,7 @@ export interface ProductContextProps {
 
 export interface ProductCardHocProps {
   ({ product, children }: ProductCardProps): JSX.Element;
-  Title: ({ title }: { title?: string | undefined }) => JSX.Element;
-  Image: ({ img }: { img?: string | undefined }) => JSX.Element;
-  Buttons: () => JSX.Element;
+  Title: (props: ProductTitleProps) => JSX.Element;
+  Image: (props: ProductImageProps) => JSX.Element;
+  Buttons: (props: ProductButtonsProps) => JSX.Element;
 }

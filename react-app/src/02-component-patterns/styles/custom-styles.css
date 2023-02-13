@@ -1,0 +1,36 @@
+.bg-dark {
+  background-color: rgb(56, 56, 56);
+}
+
+.text-white {
+  color: white;
+}
+
+.text-bold {
+  font-weight: 800;
+  letter-spacing: 3px;
+}
+
+.text-center {
+  text-align: center;
+  display: block; 
+  margin-top: 0;
+}
+
+.custom-image {
+  padding: 10px;
+  border-radius: 20px;
+  width: calc(100% - 20px);
+}
+
+.custom-buttons {
+  width: fit-content;
+  margin-right: auto;
+  margin-left: auto;
+}
+
+.custom-buttons button,
+.custom-buttons div {
+  color: white;
+  border-color: white;
+}

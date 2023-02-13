@@ -1,6 +1,6 @@
 import { ProductCardHocProps } from '../interfaces';
-import { ProductButtons } from './ProductButtons';
 import { ProductCard as ProductCardHoc } from './ProductCard';
+import { ProductButtons } from './ProductButtons';
 import { ProductImage } from './ProductImage';
 import { ProductTitle } from './ProductTitle';
 
