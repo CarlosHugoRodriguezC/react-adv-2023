@@ -1,7 +1,7 @@
-import { useState } from 'react';
 import { ProductCard } from '../components';
 import { ProductButtons, ProductImage, ProductTitle } from '../components';
-import { onChangeArgs, Product } from '../interfaces';
+import { useShoppingCart } from '../hooks';
+import { Product } from '../interfaces';
 
 import '../styles/custom-styles.css';
 
@@ -19,38 +19,8 @@ const product2: Product = {
 
 const products: Product[] = [product1, product2];
 
-interface ProductInCart extends Product {
-  count: number;
-}
-interface Cart {
-  [key: string]: ProductInCart;
-}
-
 export const ShoppingPage = () => {
-  const [shoppingCart, setShoppingCart] = useState<Cart>({});
-
-  const onProductCountChange = ({
-    product,
-    count,
-  }: {
-    product: Product;
-    count: number;
-  }) => {
-    console.log({ product, count });
-
-    setShoppingCart((prev) => {
-      if (count === 0) {
-        const { [product.id]: toDelete, ...rest } = prev;
-        return {
-          ...rest,
-        };
-      }
-      return {
-        ...prev,
-        [product.id]: { ...product, count },
-      };
-    });
-  };
+  const { shoppingCart, onProductCountChange } = useShoppingCart();
 
   return (
     <div
@@ -70,7 +40,8 @@ export const ShoppingPage = () => {
             key={product.id}
             className='bg-dark'
             product={product}
-            onChange={(evento) => onProductCountChange(evento)}>
+            onChange={(evento) => onProductCountChange(evento)}
+            value={shoppingCart[product.id]?.count || 0}>
             <ProductImage className='custom-image' />
             <ProductTitle className='text-white text-center text-bold' />
             <ProductButtons className='custom-buttons' />
@@ -78,15 +49,14 @@ export const ShoppingPage = () => {
         ))}
       </div>
 
-      
-
       <div className='shopping-cart'>
         {Object.entries(shoppingCart).map(([key, product]) => (
           <ProductCard
             key={key}
             className='bg-dark'
             product={product}
-            onChange={(evento) => onProductCountChange(evento)}
+            onChange={onProductCountChange}
+            value={shoppingCart[product.id]?.count || 0}
             style={{ width: '100px' }}>
             <ProductImage className='custom-image' />
             <ProductButtons className='custom-buttons' />
