@@ -1,68 +1,48 @@
-import { ProductCard } from '../components';
-import { ProductButtons, ProductImage, ProductTitle } from '../components';
-import { useShoppingCart } from '../hooks';
-import { Product } from '../interfaces';
+import { ProductCard, ProductImage, ProductTitle, ProductButtons } from '../components';
 
+import { products } from '../data/products';
 import '../styles/custom-styles.css';
 
-const product1: Product = {
-  id: '1',
-  title: 'Coffe Mug - Card',
-  img: './coffee-mug.png',
-};
+const product = products[0];
 
-const product2: Product = {
-  id: '2',
-  title: 'Coffe Mug - Meme',
-  img: './coffee-mug.png',
-};
 
-const products: Product[] = [product1, product2];
 
 export const ShoppingPage = () => {
-  const { shoppingCart, onProductCountChange } = useShoppingCart();
+ 
 
-  return (
-    <div
-      style={{
-        flex: 1,
-      }}>
-      <h1>ShoppingPage</h1>
-      <hr />
-      <div
-        style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(4, 1fr)',
-          gap: '15px',
-        }}>
-        {products.map((product) => (
-          <ProductCard
-            key={product.id}
-            className='bg-dark'
-            product={product}
-            onChange={(evento) => onProductCountChange(evento)}
-            value={shoppingCart[product.id]?.count || 0}>
-            <ProductImage className='custom-image' />
-            <ProductTitle className='text-white text-center text-bold' />
-            <ProductButtons className='custom-buttons' />
-          </ProductCard>
-        ))}
-      </div>
+    return (
+        <div>
+            <h1>Shopping Store</h1>
+            <hr />
 
-      <div className='shopping-cart'>
-        {Object.entries(shoppingCart).map(([key, product]) => (
-          <ProductCard
-            key={key}
-            className='bg-dark'
-            product={product}
-            onChange={onProductCountChange}
-            value={shoppingCart[product.id]?.count || 0}
-            style={{ width: '100px' }}>
-            <ProductImage className='custom-image' />
-            <ProductButtons className='custom-buttons' />
-          </ProductCard>
-        ))}
-      </div>
-    </div>
-  );
-};
+            <ProductCard 
+                key={ product.id }
+                product={ product }
+                className="bg-dark text-white"
+                initialValues={{
+                    count: 6,
+                    // maxCount: 10,
+                }}
+            >
+                {
+                    ({ reset, count, isMaxCountReached, maxCount, increaseBy  }) => (
+                        <>
+                            <ProductImage className="custom-image" style={{ boxShadow: '10px 10px 10px rgba(0,0,0,0.2)' }} />
+                            <ProductTitle className="text-bold" />
+                            <ProductButtons className="custom-buttons" />
+                            
+                            <button onClick={ reset }>Reset</button>
+                            <button onClick={ () => increaseBy(-2) }> -2 </button>
+                            {
+                                ( !isMaxCountReached && <button onClick={ ()=> increaseBy(+2) }> +2 </button> )
+                            }
+                            
+                            <span>{ count } - { maxCount }</span>
+                        </>
+                    )
+                }
+            </ProductCard>
+
+        </div>
+    )
+}

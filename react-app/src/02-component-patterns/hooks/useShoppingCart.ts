@@ -1,56 +1,34 @@
 import { useState } from 'react';
-import { Product } from '../interfaces';
+import { Product, ProductInCart } from '../interfaces/interfaces';
 
-export interface ProductInCart extends Product {
-  count: number;
-}
-export interface Cart {
-  [key: string]: ProductInCart;
-}
+
 
 export const useShoppingCart = () => {
-  const [shoppingCart, setShoppingCart] = useState<Cart>({});
 
-  const onProductCountChange = ({
-    product,
-    count,
-  }: {
-    product: Product;
-    count: number;
-  }) => {
-    setShoppingCart((prev) => {
-      const productInCart: ProductInCart = prev[product.id] || {
-        ...product,
-        count: 0,
-      };
+    const [ shoppingCart, setShoppingCart ] = useState<{ [key:string]: ProductInCart  }>({});
 
-      if (Math.max(productInCart.count + count, 0) > 0) {
-        productInCart.count += count;
-        return {
-          ...prev,
-          [product.id]: productInCart,
-        };
-      }
+    const onProductCountChange = ({ count, product }: { count:number, product: Product }) => {
+        
+        console.log({ count })
 
-      const { [product.id]: toDelete, ...rest } = prev;
+        setShoppingCart( oldShoppingCart => {
 
-      return rest;
+            if( count === 0 ) {
+                const {  [product.id]: toDelete, ...rest  } = oldShoppingCart;
+                return rest;
+            }
 
-      // if (count === 0) {
-      //   const { [product.id]: toDelete, ...rest } = prev;
-      //   return {
-      //     ...rest,
-      //   };
-      // }
-      // return {
-      //   ...prev,
-      //   [product.id]: { ...product, count },
-      // };
-    });
-  };
+            return {
+                ...oldShoppingCart,
+                [ product.id ]: { ...product, count }
+            }
+        })
 
-  return {
-    onProductCountChange,
-    shoppingCart,
-  };
-};
+    }
+
+    return {
+        shoppingCart,
+        onProductCountChange,
+    }
+
+}
