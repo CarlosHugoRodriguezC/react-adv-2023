@@ -1,0 +1,80 @@
+[
+  {
+    "type": "text",
+    "name": "firstName",
+    "placeholder": "Carlos",
+    "value": "",
+    "label": "First Name",
+    "validations": [
+      {
+        "type": "required",
+        "message": "First Name is required."
+      },
+      {
+        "type": "minlength",
+        "message": "First Name must be at least 5 characters",
+        "value": 5
+      }
+    ]
+  },
+  {
+    "type": "text",
+    "name": "lastName",
+    "placeholder": "Rodriguez",
+    "value": "",
+    "label": "Last Name",
+    "validations": [
+      {
+        "type": "required",
+        "message": "Last Name is required."
+      }
+    ]
+  },
+  {
+    "type": "email",
+    "name": "email",
+    "placeholder": "carlos@mail.com",
+    "value": "",
+    "label": "Email",
+    "validations": [
+      {
+        "type": "required",
+        "message": "Email is required."
+      },
+      {
+        "type": "email",
+        "message": "Email must be a valid email."
+      }
+    ]
+  },
+  {
+    "type": "select",
+    "name": "favoriteGame",
+    "value": "",
+    "label": "Favorite Game",
+    "options": [
+      {
+        "id": 1,
+        "label": "Super Smash"
+      },
+      {
+        "id": 2,
+        "label": "Metal Gear"
+      },
+      {
+        "id": 3,
+        "label": "Assassin's Creed"
+      },
+      {
+        "id": 4,
+        "label": "Resident Evil"
+      }
+    ],
+    "validations": [
+      {
+        "type": "required",
+        "message": "Favorite Game is required."
+      }
+    ]
+  }
+]
